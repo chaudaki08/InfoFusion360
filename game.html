@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gujarati Culture Matching Game</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #ff6347;
+            margin-bottom: 20px;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .images, .texts {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px;
+        }
+
+        .image-container, .text-container {
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px;
+            background-color: #fff;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .image-container:hover, .text-container:hover {
+            transform: scale(1.1);
+        }
+
+        .image-container img {
+            width: 250px;
+            height: 250px;
+            border-radius: 10px;
+        }
+
+        .text-container {
+            padding: 15px;
+            background-color: #ffebcd;
+        }
+
+        .matched {
+            background-color: #98fb98 !important;
+        }
+
+        .selected {
+            background-color: #add8e6 !important;
+        }
+
+        .wrong {
+            background-color: #ff6347 !important;
+        }
+
+        #score, #result {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        #score {
+            color: #4682b4;
+        }
+
+        #result {
+            color: #32cd32;
+        }
+    </style>
+</head>
+<body>
+    <h1>Match the Images to the Text</h1>
+    <div class="game-container">
+        <div class="images">
+            <div class="image-container" data-match="ganesh">
+                <img src="https://www.patelprosperityhub.com/wp-content/uploads/2024/06/ganesh-chaturthi-in-pune-1.jpg" alt="Ganesh Chaturthi">
+            </div>
+            <div class="image-container" data-match="holi">
+                <img src="https://www.patelprosperityhub.com/wp-content/uploads/2024/06/vecteezy_people-celebrate-colorful-holi-festival-in-india-annual_29632144-1.jpeg" alt="Holi Festival">
+            </div>
+            <div class="image-container" data-match="diwali">
+                <img src="https://www.patelprosperityhub.com/wp-content/uploads/2024/06/diwali-celebration-image-hd-free-photo-1.jpg" alt="Diwali Festival">
+            </div>
+            <div class="image-container" data-match="navratri">
+                <img src="https://www.patelprosperityhub.com/wp-content/uploads/2024/06/garba1-1.jpg" alt="Navratri Festival">
+            </div>
+        </div>
+        <div class="texts" id="texts-container">
+            <div class="text-container" data-match="ganesh">Ganesh Chaturthi</div>
+            <div class="text-container" data-match="holi">Holi Festival</div>
+            <div class="text-container" data-match="diwali">Diwali Festival</div>
+            <div class="text-container" data-match="navratri">Navratri Festival</div>
+        </div>
+    </div>
+    <div id="score">Score: 0</div>
+    <div id="result"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const textContainers = Array.from(document.querySelectorAll('.text-container'));
+            const imageContainers = document.querySelectorAll('.image-container');
+            const textsContainer = document.getElementById('texts-container');
+            const resultDiv = document.getElementById('result');
+            const scoreDiv = document.getElementById('score');
+            let score = 0;
+            let matches = 0;
+            let selectedText = null;
+
+            function shuffle(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+
+            shuffle(textContainers);
+            textContainers.forEach(text => {
+                textsContainer.appendChild(text);
+                text.addEventListener('click', () => selectText(text));
+            });
+
+            imageContainers.forEach(image => {
+                image.addEventListener('click', () => selectImage(image));
+            });
+
+            function selectText(text) {
+                if (selectedText) {
+                    selectedText.classList.remove('selected');
+                    selectedText.classList.remove('wrong');
+                }
+                selectedText = text;
+                selectedText.classList.add('selected');
+            }
+
+            function selectImage(image) {
+                if (selectedText) {
+                    if (selectedText.dataset.match === image.dataset.match) {
+                        matches++;
+                        score += 10;
+                        image.classList.add('matched');
+                        selectedText.remove();
+                        image.innerHTML += `<div>${selectedText.innerHTML}</div>`;
+                        updateScore();
+                    } else {
+                        selectedText.classList.add('wrong');
+                    }
+                    selectedText.classList.remove('selected');
+                    selectedText = null;
+
+                    if (matches === textContainers.length) {
+                        resultDiv.textContent = 'Congratulations! You matched all the items correctly!';
+                    }
+                }
+            }
+
+            function updateScore() {
+                scoreDiv.textContent = `Score: ${score}`;
+            }
+        });
+    </script>
+</body>
+</html>

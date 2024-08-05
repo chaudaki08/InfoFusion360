@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Scrolling</title>
+<style>
+    /* Define keyframes for scrolling animation */
+    @keyframes scroll {
+        0% {
+            transform: translateX(0%);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    /* Apply animation to the images */
+    .container .col img {
+        animation: scroll 10s linear infinite;
+    }
+
+    /* Other styles for layout */
+    .container {
+        overflow: hidden;
+    }
+
+    .row {
+        display: flex;
+    }
+
+    .col {
+        flex: 0 0 auto;
+        margin: 0 10px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <a href="https://chistatechnologies.com/telecommunication/"> <!-- Add your link here -->
+            <img src="https://chistatechnologies.com/wp-content/uploads/2024/03/Telecommunication-Services.webp" alt="Business Process Services">
+            <span>Business Process Services</span>
+            </a>
+        </div>
+        <div class="col">
+            <a href="https://chistatechnologies.com/digital-services/"> <!-- Add your link here -->
+            <img src="https://chistatechnologies.com/wp-content/uploads/2024/03/Digital-Services.webp" alt="Digital Services">
+            <span>Hello</span>
+            </a>
+        </div>
+        <div class="col">
+            <img src="https://chistatechnologies.com/wp-content/uploads/2024/03/service-1.jpg" />
+            <span>Hello</span>
+        </div>
+        <div class="col">
+            <img src="https://chistatechnologies.com/wp-content/uploads/2024/03/service-1.jpg"/>
+            <span>Hello</span>
+        </div>
+        <div class="col">
+            <img src="https://chistatechnologies.com/wp-content/uploads/2024/03/service-1.jpg" />
+            <span>Hello</span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
